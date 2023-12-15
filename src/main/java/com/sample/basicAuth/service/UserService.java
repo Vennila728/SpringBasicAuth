@@ -26,6 +26,7 @@ public class UserService implements Authentication<User> {
         if (checkExistingUser(user.getEmailAddress())) {
             return "User already exists";
         }
+
         user.setId(UUID.randomUUID().toString());
         user.setPassword(encrypt(user.getPassword()));
         authRepository.addInfo(user);
@@ -34,6 +35,7 @@ public class UserService implements Authentication<User> {
     }
 
     private boolean checkExistingUser(String userMail) {
+        // always follow a rule of one . per line
         return authRepository.getAllInfo().stream().anyMatch(existingUser -> existingUser.getEmailAddress().equalsIgnoreCase(userMail));
     }
 
