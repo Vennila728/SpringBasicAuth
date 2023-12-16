@@ -1,9 +1,8 @@
 package com.sample.basicAuth.controller;
 
-import com.sample.basicAuth.utils.routes;
 import com.sample.basicAuth.dao.User;
 import com.sample.basicAuth.service.UserService;
-import lombok.extern.slf4j.Slf4j;
+import com.sample.basicAuth.utils.routes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
