@@ -2,6 +2,7 @@ package com.sample.basicAuth.service;
 
 import com.sample.basicAuth.dao.User;
 import com.sample.basicAuth.repository.AuthRepository;
+import com.sample.basicAuth.utils.UserMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -19,17 +20,17 @@ public class UserService implements Authentication<User> {
     }
 
     @Override
-    public String signUp(User user) {
+    public String signUp(User user) throws Exception {
         if (user.getEmailAddress() == null || user.getPassword() == null || user.getName() == null)
-            return "Please enter valid data";
+            throw new Exception(UserMessage.INVALID_CREDENTIALS);
         if (checkExistingUser(user.getEmailAddress())) {
-            return "User already exists";
+            return UserMessage.USER_EXISTS;
         }
         user.setId(UUID.randomUUID().toString());
         user.setPassword(encrypt(user.getPassword()));
         authRepository.addInfo(user);
 
-        return "SignedUp Successfully";
+        return UserMessage.SIGNUP_SUCCESS;
     }
 
     private boolean checkExistingUser(String userMail) {
@@ -38,13 +39,13 @@ public class UserService implements Authentication<User> {
     }
 
     @Override
-    public String login(User user) {
+    public String login(User user) throws Exception {
         if (loginValidation(user)) {
-            log.info("loginValidation {}", loginValidation(user));
-            return "logged in Successfully";
+            log.info("LoginValidation {}", loginValidation(user));
+            return UserMessage.LOGIN_SUCCESS;
         }
 
-        return "logged in failed Please check the credentials";
+        throw new Exception(UserMessage.LOGIN_FAILED);
     }
 
     private boolean loginValidation(User user) {

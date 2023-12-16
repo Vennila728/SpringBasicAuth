@@ -6,9 +6,9 @@ import java.util.Collection;
 
 public interface Authentication<T> {
 
-    String signUp(T t);
+    String signUp(T t) throws Exception;
 
-    String login(T t);
+    String login(T t) throws Exception;
 
     T getUserInfo(String t);
 
