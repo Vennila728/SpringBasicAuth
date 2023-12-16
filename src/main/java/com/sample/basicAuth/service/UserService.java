@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -34,7 +33,8 @@ public class UserService implements Authentication<User> {
     }
 
     private boolean checkExistingUser(String userMail) {
-        return authRepository.getAllInfo().stream().anyMatch(existingUser -> existingUser.getEmailAddress().equalsIgnoreCase(userMail));
+        return authRepository.getAllInfo().stream()
+                .anyMatch(existingUser -> existingUser.getEmailAddress().equalsIgnoreCase(userMail));
     }
 
     @Override
